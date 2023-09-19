@@ -13,7 +13,7 @@
   }
   ```
 */
-import { Fragment, useState } from 'react'
+import { Fragment, ReactNode, useState } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
     Bars3Icon,
@@ -28,26 +28,27 @@ import {
     XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
-import Card from '../components/Card'
-import ProductForm from '../components/ProductForm'
+import { Routes } from '../config';
+import { signOut } from 'firebase/auth'
+import { auth } from '@/firebase'
 
-const cardComponent = <Card />;
+
 const navigation = [
-    { name: 'Dashboard', href: `{cardComponent}`, icon: HomeIcon, current: true },
-    { name: 'Documents', href: '#', icon: DocumentDuplicateIcon, current: false },
+    { name: 'Dashboard', href: Routes.home.dashboard, icon: HomeIcon, current: true },
+    { name: 'Documents', href: Routes.home.documents, icon: DocumentDuplicateIcon, current: false },
     { name: 'Reports', href: '#', icon: ChartPieIcon, current: false },
 ]
 
 const userNavigation = [
     { name: 'Your profile', href: '#' },
-    { name: 'Sign out', href: '#' },
+    { name: 'Sign out', href: '/' },
 ]
 
 function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function Dashboard() {
+export default function Dashboard({ children }: { children: ReactNode }) {
     const [sidebarOpen, setSidebarOpen] = useState(false)
 
     return (
@@ -95,7 +96,7 @@ export default function Dashboard() {
                                         leaveFrom="opacity-100"
                                         leaveTo="opacity-0"
                                     >
-                                        <div className="absolute left-full top-0 flex w-16 justify-center pt-5">
+                                        <div className="absolute left-full top-0 flex w-16 justify-center ">
                                             <button type="button" className="-m-2.5 p-2.5" onClick={() => setSidebarOpen(false)}>
                                                 <span className="sr-only">Close sidebar</span>
                                                 <XMarkIcon className="h-6 w-6 text-white" aria-hidden="true" />
@@ -197,7 +198,7 @@ export default function Dashboard() {
                 </div>
                 {/* Main display Panel */}
                 <div className="lg:pl-72 ">
-                    <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
+                    <div className="sticky  flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
                         <button type="button" className="-m-2.5 p-2.5 text-gray-700 lg:hidden" onClick={() => setSidebarOpen(true)}>
                             <span className="sr-only">Open sidebar</span>
                             <Bars3Icon className="h-6 w-6" aria-hidden="true" />
@@ -238,12 +239,13 @@ export default function Dashboard() {
                                         <span className="sr-only">Open user menu</span>
                                         <img
                                             className="h-8 w-8 rounded-full bg-gray-50"
-                                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                            src={auth.currentUser?.photoURL || ""} width={100} height={100}
+
                                             alt=""
                                         />
                                         <span className="hidden lg:flex lg:items-center">
                                             <span className="ml-4 text-sm font-semibold leading-6 text-gray-900" aria-hidden="true">
-                                                Tom Cook
+                                                {auth.currentUser?.displayName}
                                             </span>
                                             <ChevronDownIcon className="ml-2 h-5 w-5 text-gray-400" aria-hidden="true" />
                                         </span>
@@ -262,6 +264,11 @@ export default function Dashboard() {
                                                 <Menu.Item key={item.name}>
                                                     {({ active }) => (
                                                         <a
+                                                            onClick={async () => {
+                                                                if (item.name === "Sign out") {
+                                                                    await signOut(auth)
+                                                                }
+                                                            }}
                                                             href={item.href}
                                                             className={classNames(
                                                                 active ? 'bg-gray-50' : '',
@@ -283,12 +290,12 @@ export default function Dashboard() {
                     <main className="py-10">
                         <div className="px-4 sm:px-6 lg:px-8">
 
-                            {/* <Card /> */}
+                            {children}
 
                         </div>
                     </main>
                 </div>
-            </div>
+            </div >
         </>
     )
 }
