@@ -36,7 +36,6 @@ import { auth } from '@/firebase'
 const navigation = [
     { name: 'Dashboard', href: Routes.home.dashboard, icon: HomeIcon, current: true },
     { name: 'Documents', href: Routes.home.documents, icon: DocumentDuplicateIcon, current: false },
-    { name: 'Reports', href: '#', icon: ChartPieIcon, current: false },
 ]
 
 const userNavigation = [
