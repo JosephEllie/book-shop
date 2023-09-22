@@ -1,43 +1,76 @@
+"use client"
 
+import { Products } from "@/app/utils/firebase/products";
 import productsData from "../../../data.json"
 import Product from '../../../utils/interface';
 import Landing from "../page";
+import { Firestore, doc, getDoc, collection } from "firebase/firestore";
+import { useState, useEffect, createContext } from 'react';
+import { useRouter } from "next/navigation";
 
+
+export const AppContext = createContext({ productsList: [] })
 export default function MarketPlace() {
-    const products: Product[] = productsData.productsData;
+    // const products: Product[] = productsData.productsData;
+    const [productsList, setProductList] = useState([]);
+
+    // function loadProducts(data:any){
+    //     let product = new Products();
+    //     product.saveProductData(data)
+    // }
+    function getProducts() {
+        let product = new Products();
+        product.getUsersAllProducts().then((pro) => {
+            setProductList(pro as any)
+        })
+    }
+    useEffect(() => {
+        // Fetch data from Firestore
+        getProducts();
+    }, []);
+
+    // fires up product description page
+    const router = useRouter()
+    const FireProductDetail = () => {
+        return router.push("../../pages/ProductDesc");
+    }
     return (
         <Landing>
-            <div className="bg-white">
-                <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-                    <h2 className="text-2xl font-bold tracking-tight text-gray-900">Book Listing</h2>
+            <AppContext.Provider value={{ productsList }}>
+                <div className="bg-white">
+                    <div className="mx-auto max-w-2xl max-h-full sm:max-h-full px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+                        <h2 className="text-2xl font-bold tracking-tight text-gray-900">Book Listing</h2>
 
-                    <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-                        {products.map((product) => (
-                            <div key={product.id} className="group relative">
-                                <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
-                                    <img
-                                        src={product.imageSrc}
-                                        alt={product.imageAlt}
-                                        className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                                    />
-                                </div>
-                                <div className="mt-4 flex justify-between">
-                                    <div>
-                                        <h3 className="text-sm text-gray-700">
-                                            <a href={product.href}>
-                                                <span aria-hidden="true" className="absolute inset-0" />
-                                                {product.name}
-                                            </a>
-                                        </h3>
-                                        <p className="mt-1 text-sm text-gray-500">{product.color}</p>
+                        <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+                            {productsList.map((product: any) => (
+                                <button onClick={FireProductDetail}>
+                                    <div key={product.id} className="group relative">
+                                        <div className="aspect-h-1 border-2 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+                                            <img
+                                                src={product.image}
+                                                alt={""}
+                                                className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                                            />
+                                        </div>
+                                        <div className="mt-4 flex justify-between">
+                                            <div>
+                                                <h3 className="text-sm text-gray-700">
+                                                    <a href={product.href}>
+                                                        <span aria-hidden="true" className="absolute inset-0" />
+                                                        {product.title}
+                                                    </a>
+                                                </h3>
+                                                <p className="mt-1 text-sm text-gray-500">{product.color}</p>
+                                            </div>
+                                            <p className="text-sm font-medium text-gray-900">{product.price}</p>
+                                        </div>
                                     </div>
-                                    <p className="text-sm font-medium text-gray-900">{product.price}</p>
-                                </div>
-                            </div>
-                        ))}
+                                </button>
+                            ))}
+                        </div>
                     </div>
                 </div>
-            </div>
+            </AppContext.Provider>
         </Landing>
     )
 }

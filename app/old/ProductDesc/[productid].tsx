@@ -18,7 +18,8 @@ import { CheckIcon, QuestionMarkCircleIcon, StarIcon } from '@heroicons/react/20
 import { RadioGroup } from '@headlessui/react'
 import { BackwardIcon, ShieldCheckIcon } from '@heroicons/react/24/outline'
 import { useContext } from 'react'
-import { AppContext } from '../view/MarketPlace/page'
+import React from 'react'
+// import { AppContext } from '../view/MarketPlace/page'
 const product = {
     name: {},
     href: '#',
@@ -44,7 +45,7 @@ function classNames(...classes: any) {
 
 export default function ProductDesc() {
     // const [selectedSize, setSelectedSize] = useState(product.sizes[0])
-    const { productsList } = useContext(AppContext)
+    // const { productsList } = useContext(AppContext)
     return (
         <div className="bg-white">
 
@@ -85,13 +86,13 @@ export default function ProductDesc() {
 
                     <div className="mt-4">
                         <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                            Africa History
+                            Book title goes here
                         </h1>
                     </div>
 
                     <section aria-labelledby="information-heading" className="mt-4">
                         <h2 id="information-heading" className="sr-only">
-
+                            Product information
                         </h2>
 
                         <div className="flex items-center">
@@ -122,7 +123,6 @@ export default function ProductDesc() {
 
                         <div className="mt-4 space-y-6">
                             <p className="text-base text-gray-500">
-
                                 Learn about African history and the icons that defined what it is today
                             </p>
                         </div>
@@ -137,8 +137,7 @@ export default function ProductDesc() {
                 {/* Product image */}
                 <div className="mt-10 lg:col-start-2 lg:row-span-2 lg:mt-0 lg:self-center">
                     <div className="aspect-h-1 aspect-w-1 overflow-hidden rounded-lg">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBbPQsM5H6liTRljvl4DtZx4fBsZ8n2qVXM21jHTLJ0LiiEC0c9bgPA7tDSLz_HgHdwrc&usqp=CAU"
-                            className="h-full w-full object-cover object-center" />
+                        <img src={product.imageSrc} alt={product.imageAlt} className="h-full w-full object-cover object-center" />
                     </div>
                 </div>
 
@@ -200,13 +199,12 @@ export default function ProductDesc() {
                                 </a>
                             </div> */}
                             <div className="mt-10">
-                                <a
-                                    href='../pages/ShoppingCart/'
+                                <button
                                     type="submit"
                                     className="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
                                 >
                                     Add to Cart
-                                </a>
+                                </button>
                             </div>
                             {/* <div className="mt-6 text-center">
                                 <a href="#" className="group inline-flex text-base font-medium">

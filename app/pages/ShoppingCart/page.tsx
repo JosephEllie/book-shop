@@ -9,24 +9,12 @@ const products = [
         name: 'Artwork Tee',
         href: '#',
         price: '$32.00',
-        color: 'Mint',
+        // color: 'Mint',
         size: 'Medium',
         inStock: true,
         imageSrc: 'https://tailwindui.com/img/ecommerce-images/checkout-page-03-product-04.jpg',
         imageAlt: 'Front side of mint cotton t-shirt with wavey lines pattern.',
-    },
-    {
-        id: 2,
-        name: 'Basic Tee',
-        href: '#',
-        price: '$32.00',
-        color: 'Charcoal',
-        inStock: false,
-        leadTime: '7-8 years',
-        size: 'Large',
-        imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-01-product-02.jpg',
-        imageAlt: 'Front side of charcoal cotton t-shirt.',
-    },
+    }
     // More products...
 ]
 
@@ -55,8 +43,8 @@ export default function ShoppingCart() {
                                 <li key={product.id} className="flex py-6">
                                     <div className="flex-shrink-0">
                                         <img
-                                            src={product.imageSrc}
-                                            alt={product.imageAlt}
+                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBbPQsM5H6liTRljvl4DtZx4fBsZ8n2qVXM21jHTLJ0LiiEC0c9bgPA7tDSLz_HgHdwrc&usqp=CAU"
+                                            alt=""
                                             className="h-24 w-24 rounded-md object-cover object-center sm:h-32 sm:w-32"
                                         />
                                     </div>
@@ -66,13 +54,13 @@ export default function ShoppingCart() {
                                             <div className="flex justify-between">
                                                 <h4 className="text-sm">
                                                     <a href={product.href} className="font-medium text-gray-700 hover:text-gray-800">
-                                                        {product.name}
+                                                        African History
                                                     </a>
                                                 </h4>
-                                                <p className="ml-4 text-sm font-medium text-gray-900">{product.price}</p>
+                                                <p className="ml-4 text-sm font-medium text-gray-900">19.99</p>
                                             </div>
-                                            <p className="mt-1 text-sm text-gray-500">{product.color}</p>
-                                            <p className="mt-1 text-sm text-gray-500">{product.size}</p>
+                                            {/* <p className="mt-1 text-sm text-gray-500">{product.color}</p> */}
+                                            {/* <p className="mt-1 text-sm text-gray-500">{product.size}</p> */}
                                         </div>
 
                                         <div className="mt-4 flex flex-1 items-end justify-between">
@@ -83,7 +71,7 @@ export default function ShoppingCart() {
                                                     <ClockIcon className="h-5 w-5 flex-shrink-0 text-gray-300" aria-hidden="true" />
                                                 )}
 
-                                                <span>{product.inStock ? 'In stock' : `Will ship in ${product.leadTime}`}</span>
+                                                {/* <span>{product.inStock ? 'In stock' : `Will ship in ${product.leadTime}`}</span> */}
                                             </p>
                                             <div className="ml-4">
                                                 <button type="button" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
@@ -107,7 +95,7 @@ export default function ShoppingCart() {
                             <dl className="space-y-4">
                                 <div className="flex items-center justify-between">
                                     <dt className="text-base font-medium text-gray-900">Subtotal</dt>
-                                    <dd className="ml-4 text-base font-medium text-gray-900">$96.00</dd>
+                                    <dd className="ml-4 text-base font-medium text-gray-900">$19.99</dd>
                                 </div>
                             </dl>
                             <p className="mt-1 text-sm text-gray-500">Shipping and taxes will be calculated at checkout.</p>

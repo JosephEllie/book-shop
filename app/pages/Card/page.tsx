@@ -11,7 +11,12 @@ export default function Card() {
                     <h1 className='text-gray-600'>Total Books</h1>
                 </div>
             </div>
-
+            <div className='bg-white p-6 rounded-lg'>
+                <div className='mx-auto'>
+                    <span className='text-gray-900 font-bold'>count goes here</span>
+                    <h1 className='text-gray-600'>Total Books</h1>
+                </div>
+            </div>
             <div className='bg-white p-6 rounded-lg'>
                 <div className='mx-auto'>
                     <span className='text-gray-900 font-bold'>count goes here</span>
